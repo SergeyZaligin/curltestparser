@@ -47,7 +47,7 @@ class Curl
    {
      curl_setopt($this->ch, CURLOPT_URL, $this->makeUrl($url));
      $data = curl_exec($this->ch);
-     return $data;
+     return $this->processResult($data);
    }
    /**
     * Метод преобразует url /
@@ -74,7 +74,7 @@ class Curl
 
 		if($h_end_n === false || $h_end_rn < $h_end_n){
 			$start = $h_end_rn;
-			$p = $p_rn;
+			$p = $p_rn; // $p - определили какой перенос используется
 		}
 
 		$headers_part = substr($data, 0, $start);
