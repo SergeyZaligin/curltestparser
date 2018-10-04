@@ -10,8 +10,19 @@ class Curl
    * Хост - базовая часть урла без слеша на конце
    */
   private $host;
+  
+  private $postSignup = [
+      'login' => 'parser',
+      'password' => 123456,
+      'email' => 'mail@mail.ru',
+      'role' => 'admin'
+  ];
+  private $postLogin = [
+        'login' => 'parser',
+        'password' => 123456
+    ];
 
-  /**
+    /**
    * Инициализация класса для конкретного домена
    */
   public static function app($host)
@@ -60,12 +71,40 @@ class Curl
       return $this->host . $url;
    }
    /**
+     * On Cookie
+     * 
+     * @param bool $act default '/1.txt'
+     * @return $this
+     */
+    public function cookie($file) 
+    {
+        curl_setopt($this->ch, CURLOPT_COOKIEJAR, $_SERVER['DOCUMENT_ROOT'] . $file);
+        curl_setopt($this->ch, CURLOPT_COOKIEFILE, $_SERVER['DOCUMENT_ROOT'] . $file);
+
+        return $this;
+    }
+
+    /**
+     * On post
+     * 
+     * @param bool $act default true
+     * @return $this
+     */
+    public function post($act) 
+    {
+        curl_setopt($this->ch, CURLOPT_POST, $act);
+        curl_setopt($this->ch, CURLOPT_POSTFIELDS, http_build_query($this->postLogin));
+        
+        return $this;
+    }
+   /**
      * On headers
      * 
      * @param bool $act default 1
      * @return $this
      */
-    public function headers($act) {
+    public function headers($act) 
+    {
         curl_setopt($this->ch, CURLOPT_HEADER, $act);
 
         return $this;
@@ -89,12 +128,23 @@ class Curl
      * @param int $act default 0
      * @return $this
      */
-    public function ssl($act) {
+    public function ssl($act) 
+    {
         curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, $act);
         curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, $act);
 
         return $this;
     }
+    
+    public function configLoad($param) 
+    {
+    
+    }
+    
+     public function configSave($param) 
+     {
+        
+     }
 
     /**
     * Метод преобразует $data, отделяя заголовки от тела сообщения
