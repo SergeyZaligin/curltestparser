@@ -46,7 +46,7 @@ class Curl
     /* 	foreach($this->headers as $header)
         $this->settings[]="CURLOPT_HTTPHEADER => $header,"; */
     //обработка юзер агента
-    curl_setopt($this->ch, CURLOPT_USERAGENT, $this->user_agent());
+    curl_setopt($this->ch, CURLOPT_USERAGENT, $this->userAgent());
     //$this->settings[]="CURLOPT_USERAGENT =>". $this->user_agent().",";
   }
   /**
