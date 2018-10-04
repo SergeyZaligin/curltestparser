@@ -54,15 +54,52 @@ class Curl
     */
    private function makeUrl($url)
    {
-     if('/' !== isset($url[0])){
+     if ('/' !== isset($url[0])) {
        $url = '/' . $url;
      }
       return $this->host . $url;
    }
    /**
+     * On headers
+     * 
+     * @param bool $act default 1
+     * @return $this
+     */
+    public function headers($act) {
+        curl_setopt($this->ch, CURLOPT_HEADER, $act);
+
+        return $this;
+    }
+
+    /**
+    * On http
+    * 
+    * @param bool $act default false
+    * @return $this
+    */
+   public function http($act) 
+   {
+       curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, $act);
+
+       return  $this;
+   }
+   /**
+     * On https
+     * 
+     * @param int $act default 0
+     * @return $this
+     */
+    public function ssl($act) {
+        curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, $act);
+        curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, $act);
+
+        return $this;
+    }
+
+    /**
     * Метод преобразует $data, отделяя заголовки от тела сообщения
     */
-   private function processResult($data)
+   private function processResult($data): array
    {
       $p_n = "\n";
       $p_rn = "\r\n";
@@ -92,10 +129,10 @@ class Curl
 			$headers[$name] = $value;
 		}
 
-		return array(
+		return [
 			'headers' => $headers,
 			'html' => $body_part
-		);
+                    ];
 
    }
 }
