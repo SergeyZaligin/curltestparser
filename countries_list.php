@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * I. STAP load all countries in file (href and title)
+ */
 include_once('lib/Curl.php');
 include_once('lib/simple_html_dom.php');
 
@@ -42,6 +44,7 @@ echo '<pre>';
 print_r($countries);
 echo '</pre>';
 
+// PHP in JSON
 file_put_contents('res/all', json_encode($countries));
 
 echo "<br>done: $done<br>";

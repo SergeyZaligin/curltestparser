@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * III. STAP save for every country html page in file
+ */
 include_once('lib/parser.php');
 include_once('lib/simple_html_dom.php');
 	
