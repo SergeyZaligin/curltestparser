@@ -10,7 +10,7 @@ class Parser
      * 
      * @var int
      */
-    private $cur;
+    private $cursor;
     
     /**
      * String
@@ -24,7 +24,7 @@ class Parser
      * @param string $str
      * @return string
      */
-    public static function app($str): string
+    public static function app($str)
     {
         return new self($str);
     }
@@ -37,41 +37,43 @@ class Parser
     private function __construct($str)
     {
         $this->str = $str;
-        $this->cur = 0;
+        $this->cursor = 0;
     }
     
     /**
+     * Pattern position
      * 
      * @param type $pattern
      * @return boolean
      */
     public function moveTo($pattern)
     {
-        $res = strpos($this->str, $pattern, $this->cur);
+        $res = strpos($this->str, $pattern, $this->cursor);
         
-        if ($res === false) {
+        if (!$res) {
             return -1;
         }
             
-         $this->cur = $res;
+         $this->cursor = $res;
          
          return true;
     }
     
     /**
+     * After pattern position
      * 
      * @param type $pattern
      * @return boolean
      */
     public function moveAfter($pattern)
     {
-        $res = strpos($this->str, $pattern, $this->cur);
+        $res = strpos($this->str, $pattern, $this->cursor);
         
-        if ($res === false) {
+        if (!$res) {
             return -1;
         }
             
-         $this->cur = $res + strlen($pattern);
+         $this->cursor = $res + strlen($pattern);
          
          return true;
     }
@@ -83,14 +85,15 @@ class Parser
      */
     public function readTo($pattern)
     {
-        $res = strpos($this->str, $pattern, $this->cur);
+        $res = strpos($this->str, $pattern, $this->cursor);
         
-        if ($res === false) {
+        if (!$res) {
             return -1;
         }
             
-        $out = substr($this->str, $this->cur, $res - $this->cur);          
-        $this->cur = $res;
+        $out = substr($this->str, $this->cursor, $res - $this->cursor);
+        
+        $this->cursor = $res;
         
         return $out;
     }
